@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juego Web - Nivel 1</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .pantalla {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .pantalla.activa {
+      display: flex;
+    }
+
+    button {
+      padding: 20px 30px;
+      background: #28a745;
+      color: white;
+      border: none;
+      font-size: 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #218838;
+    }
+
+    .imagenes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .imagenes img {
+      width: 299px;
+      height: 300px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 3px solid #fff;
+      border-radius: 12px;
+      transition: transform 0.2s;
+    }
+
+    .imagenes img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pantalla de inicio -->
+  <div id="pantallaInicio" class="pantalla activa">
+    <h1>¡Bienvenido al Juego!</h1>
+    <h1>ASTRONAUTA LEO</h1>
+    <button onclick="mostrarSeleccionNivel()">Comenzar Juego</button>
+  </div>
+
+  <!-- Pantalla de selección de nivel -->
+  <div id="pantallaSeleccion" class="pantalla">
+    <h2>Selecciona un nivel</h2>
+    <button onclick="iniciarJuego(1)">Nivel 1</button>
+    <button onclick="iniciarJuego(2)">Nivel 2</button>
+<button onclick="cambiarPantalla('pantallaInicio')">Volver al inicio</button>
+  </div>
+
+  <!-- Pantalla del juego -->
+  <div id="pantallaJuego" class="pantalla">
+    <h2 id="mensajeJuego"></h2>
+    
+    <div id="nivel1" style="display: none;">
+      <div class="imagenes">
+        <img src="IMAGENES/AGUA.png" onclick="reproducirSonido('sonidoAgua')" />
+        <img src="IMAGENES/COMER.png" onclick="reproducirSonido('sonidoCOMER')" />
+        <img src="IMAGENES/JUGAR.png" onclick="reproducirSonido('sonidoJUGAR')" />
+        <img src="IMAGENES/PELICULA.png" onclick="reproducirSonido('sonidoPELICULA')" />
+      </div>
+    </div>
+
+<button onclick="cambiarPantalla('pantallaSeleccion')">Volver al menu</button>
+  </div>
+
+  <!-- Audios -->
+  <audio id="sonidoAgua" src="IMAGENES/AGUA.mp3"></audio>
+  <audio id="sonidoCOMER" src="IMAGENES/COMER.mp3"></audio>
+  <audio id="sonidoJUGAR" src="IMAGENES/JUGAR.mp3"></audio>
+  <audio id="sonidoPELICULA" src="IMAGENES/PELICULA.mp3"></audio>
+
+  <script>
+    function mostrarSeleccionNivel() {
+      document.getElementById("pantallaInicio").classList.remove("activa");
+      document.getElementById("pantallaSeleccion").classList.add("activa");
+    }
+
+    function iniciarJuego(nivel) {
+      document.getElementById("pantallaSeleccion").classList.remove("activa");
+      document.getElementById("pantallaJuego").classList.add("activa");
+      document.getElementById("mensajeJuego").textContent = "¡Has seleccionado el Nivel " + nivel + "!";
+
+      if (nivel === 1) {
+        document.getElementById("nivel1").style.display = "block";
+      }
+    }
+
+    function reproducirSonido(id) {
+      const sonido = document.getElementById(id);
+      sonido.currentTime = 0;
+      sonido.play();
+    }
+
+function cambiarPantalla(destino) {
+  document.getElementById("pantallaJuego").classList.remove("activa");
+  document.getElementById("pantallaInicio").classList.remove("activa");
+  document.getElementById("pantallaSeleccion").classList.remove("activa");
+  document.getElementById("nivel1").style.display = "none";
+
+  // Activar la pantalla deseada
+  document.getElementById(destino).classList.add("activa");
+}
+
+
+  </script>
+</body>
+</html>
